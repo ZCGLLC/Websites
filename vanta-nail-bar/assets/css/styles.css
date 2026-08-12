@@ -212,6 +212,10 @@ select {
   color: var(--ink);
 }
 
+.nav-backdrop {
+  display: none;
+}
+
 .menu-toggle {
   display: none;
   width: 44px;
@@ -1072,6 +1076,7 @@ select {
   }
 
   .nav-backdrop {
+    display: block;
     position: fixed;
     inset: 0;
     z-index: 110;
