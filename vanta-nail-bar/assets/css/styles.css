@@ -1093,12 +1093,19 @@ select {
   }
 
   .nav {
-    position: fixed;
-    inset: 0 0 0 auto;
-    width: min(84vw, 340px);
-    height: 100vh;
-    height: 100dvh;
-    background: #faf4f2;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    width: min(88vw, 360px);
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: none;
+    margin: 0;
+    background-color: #faf4f2 !important;
+    background-image: none !important;
+    opacity: 1 !important;
     color: var(--ink);
     flex-direction: column;
     align-items: flex-start;
@@ -1106,9 +1113,11 @@ select {
     gap: 1.1rem;
     transform: translateX(105%);
     transition: transform 0.35s var(--ease);
-    box-shadow: var(--shadow);
-    z-index: 120;
+    box-shadow: -16px 0 40px rgba(24, 19, 20, 0.18);
+    z-index: 130;
     overflow-y: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   .nav.is-open {
