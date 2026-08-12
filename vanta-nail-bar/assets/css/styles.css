@@ -988,6 +988,21 @@ select {
   border-color: rgba(250, 244, 242, 0.5);
 }
 
+.socials-ink a {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.socials-ink a:hover {
+  background: rgba(24, 19, 20, 0.05);
+  border-color: var(--ink);
+}
+
+.cta-band .btn-ghost {
+  border-color: rgba(250, 244, 242, 0.55);
+  color: var(--pearl);
+}
+
 .footer-bottom {
   display: flex;
   flex-wrap: wrap;
