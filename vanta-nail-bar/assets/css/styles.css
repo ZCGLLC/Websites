@@ -87,8 +87,9 @@ select {
 
 .site-header.is-scrolled,
 .site-header.is-solid {
-  background: rgba(250, 244, 242, 0.92);
-  backdrop-filter: blur(14px);
+  /* Opaque background only — avoid backdrop-filter so fixed mobile nav
+     is not trapped in the header containing block. */
+  background: #faf4f2;
   box-shadow: 0 1px 0 var(--line);
 }
 

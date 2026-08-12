@@ -23,6 +23,17 @@
       document.body.appendChild(backdrop);
     }
 
+    // Keep a placeholder so the header layout stays stable, and park the
+    // drawer on <body> so position:fixed is never trapped by header styles.
+    const placeholder = document.createComment("nav-placeholder");
+    const parkNavOnBody = () => {
+      if (nav.parentElement !== document.body) {
+        nav.parentNode.insertBefore(placeholder, nav);
+        document.body.appendChild(nav);
+      }
+    };
+    parkNavOnBody();
+
     const setMenuOpen = (open) => {
       toggle.setAttribute("aria-expanded", String(open));
       nav.classList.toggle("is-open", open);
