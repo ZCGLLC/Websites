@@ -15,16 +15,28 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   if (toggle && nav) {
+    let backdrop = document.querySelector(".nav-backdrop");
+    if (!backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.className = "nav-backdrop";
+      backdrop.setAttribute("aria-hidden", "true");
+      document.body.appendChild(backdrop);
+    }
+
+    const setMenuOpen = (open) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      nav.classList.toggle("is-open", open);
+      backdrop.classList.toggle("is-open", open);
+      document.body.classList.toggle("nav-open", open);
+    };
+
     toggle.addEventListener("click", () => {
       const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      nav.classList.toggle("is-open", !open);
+      setMenuOpen(!open);
     });
+    backdrop.addEventListener("click", () => setMenuOpen(false));
     nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        toggle.setAttribute("aria-expanded", "false");
-        nav.classList.remove("is-open");
-      });
+      link.addEventListener("click", () => setMenuOpen(false));
     });
   }
 
