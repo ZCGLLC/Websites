@@ -23,18 +23,36 @@
       document.body.appendChild(backdrop);
     }
 
-    // Keep a placeholder so the header layout stays stable, and park the
-    // drawer on <body> so position:fixed is never trapped by header styles.
+    // Keep nav inside the header for desktop. Only relocate the drawer to
+    // <body> while the mobile menu is open so fixed positioning is reliable.
     const placeholder = document.createComment("nav-placeholder");
+    let homeParent = nav.parentNode;
+    const isMobileNav = () => window.matchMedia("(max-width: 820px)").matches;
+
+    const restoreNav = () => {
+      if (placeholder.isConnected && placeholder.parentNode) {
+        placeholder.parentNode.insertBefore(nav, placeholder);
+        placeholder.remove();
+      } else if (homeParent && nav.parentElement !== homeParent && homeParent.isConnected) {
+        homeParent.appendChild(nav);
+      }
+    };
+
     const parkNavOnBody = () => {
-      if (nav.parentElement !== document.body) {
-        nav.parentNode.insertBefore(placeholder, nav);
+      if (nav.parentElement === document.body) return;
+      homeParent = nav.parentNode;
+      if (homeParent) {
+        homeParent.insertBefore(placeholder, nav);
         document.body.appendChild(nav);
       }
     };
-    parkNavOnBody();
 
     const setMenuOpen = (open) => {
+      if (open && isMobileNav()) {
+        parkNavOnBody();
+      } else {
+        restoreNav();
+      }
       toggle.setAttribute("aria-expanded", String(open));
       nav.classList.toggle("is-open", open);
       backdrop.classList.toggle("is-open", open);
@@ -48,6 +66,9 @@
     backdrop.addEventListener("click", () => setMenuOpen(false));
     nav.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => setMenuOpen(false));
+    });
+    window.addEventListener("resize", () => {
+      if (!isMobileNav()) setMenuOpen(false);
     });
   }
 
